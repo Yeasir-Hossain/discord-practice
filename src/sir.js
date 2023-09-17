@@ -1,12 +1,6 @@
 const WebSocket = require('ws');
 require('dotenv').config();
 
-// USER_TOKEN="NTAxNTg5NDQ0MjA2NTI2NDc1.GzcOgC.eihuM_PLo8pN6HvOnchYmekoTYfB7yYGWae2ZU"
-// BOT_TOKEN="MTEzODE0MjM3MzI1MjE3Nzk0MA.GWa8MK.YJ4zFw_rbc6its1ffa5bVdeT1eeJWBkKd8HiIY"
-// TARGET_IDS=501589444206526475
-// APPLICATION_ID="1138142373252177940"
-// GUILD_ID="653578054072926239"
-
 var ws = new WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
 
 const token = process.env.USER_TOKEN;

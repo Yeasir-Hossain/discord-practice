@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
-const { register, reply } = require('./registerCommad');
+const axios = require('axios');
+
 require('dotenv').config();
 
 var ws = new WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
@@ -7,6 +8,11 @@ const token = process.env.USER_TOKEN;
 const userIds = process.env.TARGET_IDS.split(',');
 // console.log('userIds: ', userIds)
 // console.log(ws);
+
+// Clear the Whitespaces
+userIds.forEach((id, i) => {
+    userIds[i] = id.trim();
+});
 
 // resetting heartbeat
 const heartbeat = (ms) => {
@@ -34,7 +40,6 @@ const payload = {
 
 ws.on('open', () => {
     ws.send(JSON.stringify(payload));
-    register()
 });
 
 // Don't let it close the connection
@@ -77,9 +82,21 @@ ws.on('message', (data) => {
         case 'INTERACTION_CREATE':
             let nonce = d.nonce;
             let id = d.id;
-            // console.log(payload);
+            console.log(payload);
             // reply()
-            url = `https://discord.com/api/v10/interactions/${id}/<interaction_token>/callback`
+            url = `https://discord.com/api/v10/interactions/${id}/${nonce}/callback`
+            const options = {
+                method: 'POST',
+                data: {
+                    "type": 4,
+                    "data": {
+                        "content": "Congrats on sending your command!"
+                    }
+                },
+                url,
+            };
+            // const response = axios(options)
+            // console.log(response.data);
             break;
 
     }

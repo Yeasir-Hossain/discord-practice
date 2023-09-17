@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "register": "node src/Commands/registration.js"
   },
   "devDependencies": {
     "dotenv": "^16.3.1",
