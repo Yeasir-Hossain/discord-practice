@@ -4,7 +4,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 var ws = new WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
-const token = process.env.USER_TOKEN;
+const token = process.env.BOT_TOKEN;
 const userIds = process.env.TARGET_IDS.split(',');
 // console.log('userIds: ', userIds)
 // console.log(ws);
@@ -80,11 +80,10 @@ ws.on('message', (data) => {
             }
             break;
         case 'INTERACTION_CREATE':
-            let nonce = d.nonce;
+            let token = d.token;
             let id = d.id;
-            console.log(payload);
-            // reply()
-            url = `https://discord.com/api/v10/interactions/${id}/${nonce}/callback`
+            console.log(d.data.options);
+            url = `https://discord.com/api/v10/interactions/${id}/${token}/callback`
             const options = {
                 method: 'POST',
                 data: {
@@ -95,9 +94,7 @@ ws.on('message', (data) => {
                 },
                 url,
             };
-            // const response = axios(options)
-            // console.log(response.data);
+            const response = axios(options)
             break;
-
     }
 });
